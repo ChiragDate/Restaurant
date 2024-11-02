@@ -13,11 +13,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "Login")
 public class Login {
 
-    @Id
     private String email;
 
     private String password;
