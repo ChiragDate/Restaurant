@@ -24,7 +24,7 @@ public record CustomerRequest(
         @NotBlank(message = "Password should be present")
         @Size(min = 6, max = 12)
         @JsonProperty("password")
-        String Password
+        String password
 
 ) {
 }
