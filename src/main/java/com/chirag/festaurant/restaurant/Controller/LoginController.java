@@ -1,6 +1,6 @@
 package com.chirag.festaurant.restaurant.Controller;
 
-import com.chirag.festaurant.restaurant.Service.LoginService;
+import com.chirag.festaurant.restaurant.Service.CustomerService;
 import com.chirag.festaurant.restaurant.dto.LoginRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/login")
 public class LoginController {
 
-    private final LoginService service;
+    private final CustomerService service;
 
     @PostMapping()
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginrequest) {
