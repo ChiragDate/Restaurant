@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerMapper {
 
-    public Customer toEntity(CustomerRequest request) {
+    public Customer toCustomer(CustomerRequest request) {
         return Customer.builder()
                 .firstName(request.firstName())
                 .lastName(request.lastName())
@@ -21,5 +21,6 @@ public class CustomerMapper {
     }
 
     public CustomerResponse toCustomerResponse(Customer customer) {
+        return new CustomerResponse(customer.getFirstName(), customer.getLastName(), customer.getEmail());
     }
 }

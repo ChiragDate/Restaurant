@@ -1,16 +1,12 @@
 package com.chirag.festaurant.restaurant.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public record LoginRequest(
 
-        @NotNull(message = "Login should be present")
-        @NotEmpty(message = "Login should be present")
-        @NotBlank(message = "Login should be present")
+        @NotNull(message = "Email should be present")
+        @Email(message = "Email must be in correct format")
         @JsonProperty("email")
         String email,
 

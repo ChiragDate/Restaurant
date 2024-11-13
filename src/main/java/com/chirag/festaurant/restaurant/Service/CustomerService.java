@@ -7,6 +7,8 @@ import com.chirag.festaurant.restaurant.dto.CustomerRequest;
 import com.chirag.festaurant.restaurant.dto.CustomerResponse;
 import com.chirag.festaurant.restaurant.dto.LoginRequest;
 import com.chirag.festaurant.restaurant.helper.EncryptionService;
+import com.chirag.festaurant.restaurant.helper.JWTHelper;
+import exception.CustomerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,15 +23,20 @@ public class CustomerService {
     private final CustomerRepo repo;
     private final CustomerMapper mapper;
     private final EncryptionService encryptionService;
+    private final JWTHelper jwtHelper;
 
     public String createCustomer(CustomerRequest request) {
-        Customer customer = mapper.toEntity(request);
+        Customer customer = mapper.toCustomer(request);
+        customer.setPassword(encryptionService.encode(customer.getPassword()));
         repo.save(customer);
         return "Added Customer";
     }
 
     public Customer getCustomer(String email) {
-        return repo.findCustomerByEmail(email);
+        return repo.findCustomerByEmail(email)
+                .orElseThrow(() -> new CustomerNotFoundException(
+                        format("Cannot update Customer:: No customer found with the provided ID:: %s", email)
+                ));
     }
 
     public CustomerResponse retrieveCustomer(String email) {

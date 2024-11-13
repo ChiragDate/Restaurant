@@ -40,4 +40,7 @@ public class Customer {
 
     @Column(name = "pincode")
     private Long pincode;
+
+    @Column(name = "access_token", unique = true)
+    private String accessToken;
 }

@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/login")
+@RequestMapping("/api/auth")
 public class LoginController {
 
     private final CustomerService service;
 
-    @PostMapping()
+    @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginrequest) {
         return ResponseEntity.ok(service.loginApi(loginrequest));
     }
