@@ -22,9 +22,9 @@ public class RequestInterceptor implements HandlerInterceptor {
         }
 
         String token = authorizationHeader.substring(7); // Extract token from "Bearer {token}"
-        String username = jwtUtil.extractUsername(token);
+        String username = jwtUtil.extractEmail(token);
 
-        if (username == null || !jwtUtil.validateToken(token, username)) {
+        if (username == null || !jwtUtil.validateToken(token)) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
         }

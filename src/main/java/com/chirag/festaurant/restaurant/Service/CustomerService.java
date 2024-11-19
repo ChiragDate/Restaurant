@@ -46,7 +46,7 @@ public class CustomerService {
 
     public String loginApi(LoginRequest request) {
         Customer customer = getCustomer(request.email());
-        if (!encryptionService.validatePassword(request.password(), customer.getPassword())) {
+        if (encryptionService.validatePassword(request.password(), customer.getPassword())) {
             return "Wrong Email or Password";
         }
 
