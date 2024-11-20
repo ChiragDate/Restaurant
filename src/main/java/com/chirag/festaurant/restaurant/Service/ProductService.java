@@ -1,8 +1,10 @@
 package com.chirag.festaurant.restaurant.Service;
 
 import com.chirag.festaurant.restaurant.Mapper.ProductMapper;
+import com.chirag.festaurant.restaurant.Model.Customer;
 import com.chirag.festaurant.restaurant.Model.Product;
 import com.chirag.festaurant.restaurant.Repository.ProductRepo;
+import com.chirag.festaurant.restaurant.dto.ProductRequest;
 import exception.CustomerNotFoundException;
 import exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +21,10 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final ProductMapper productMapper;
 
-    public String createProduct(Product product) {
-        productRepo.save(product);
-        return "Succesfully created product";
+    public String createProduct(ProductRequest request) {
+        Product prod = productMapper.toProduct(request);
+        productRepo.save(prod);
+        return "Successfully created product";
     }
 
     public Product getProduct(String name) {
@@ -31,8 +34,8 @@ public class ProductService {
                 ));
     }
 
-    public String deleteProduct(Product product) {
-        productRepo.delete(product);
+    public String deleteProduct(Long id) {
+        productRepo.deleteById(id);
         return "Deleted successfully";
     }
 }
