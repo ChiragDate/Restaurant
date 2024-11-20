@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("api/v1/products")
@@ -15,7 +17,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<String> createProduct(@RequestBody ProductRequest productRequest) {
         return ResponseEntity.ok(productService.createProduct(productRequest));
     }
@@ -28,6 +30,20 @@ public class ProductController {
     @PostMapping("/delete/{id}")
     public ResponseEntity<String> deleteProduct(@RequestBody @PathVariable("id") Long id) {
         return ResponseEntity.ok(productService.deleteProduct(id));
+    }
+
+    @PutMapping("/update/{productName}")
+    public ResponseEntity<String> updateProduct(
+            @PathVariable String productName,
+            @RequestBody ProductRequest request) {
+        String response = productService.updateProduct(request, productName);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/top2")
+    public ResponseEntity<List<Product>> getTop2ProductsInRange() {
+        List<Product> products = productService.getTop2ProductsInRange();
+        return ResponseEntity.ok(products);
     }
 }
 

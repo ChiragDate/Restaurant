@@ -5,11 +5,11 @@ import com.chirag.festaurant.restaurant.Model.Customer;
 import com.chirag.festaurant.restaurant.Model.Product;
 import com.chirag.festaurant.restaurant.Repository.ProductRepo;
 import com.chirag.festaurant.restaurant.dto.ProductRequest;
-import exception.CustomerNotFoundException;
 import exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static java.lang.String.format;
@@ -37,5 +37,25 @@ public class ProductService {
     public String deleteProduct(Long id) {
         productRepo.deleteById(id);
         return "Deleted successfully";
+    }
+
+    public String updateProduct(ProductRequest request, String productName) {
+        Product existingProduct = productRepo.getProductByName(productName)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        if (request.name() != null && !request.name().equals(existingProduct.getName())) {
+            existingProduct.setName(request.name());
+        }
+        if (request.price() != null && !request.price().equals(existingProduct.getPrice())) {
+            existingProduct.setPrice(request.price());
+        }
+
+        productRepo.save(existingProduct);
+
+        return "Updated successfully";
+    }
+
+    public List<Product> getTop2ProductsInRange() {
+        return productRepo.findTop2ProductsInRange();
     }
 }
